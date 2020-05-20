@@ -24,3 +24,21 @@ app.get("/notes", function (req, res) {
 });
 //static files (CSS)
 app.use(express.static(__dirname + '/public'));
+
+//get all notes
+app.get("/api/notes", function (req, res) {
+    // return res.json(notes);
+});
+
+//adds a new note
+app.post("/api/notes", function (req, res) {
+});
+
+//deletes a note by id
+app.delete("/api/notes/:id", function (req, res) {
+});
+
+// Appl begins listening for call
+app.listen(PORT, function () {
+    console.log("App listening on PORT " + PORT);
+});
