@@ -52,11 +52,12 @@ var renderActiveNote = function () {
 // Get the note data from the inputs, save it to the db and update the view
 var handleNoteSave = function () {
     var newNote = {
-        title: $noteTitle.val(),
-        text: $noteText.val()
+        title: $noteTitle.val().trim(),
+        text: $noteText.val().trim()
     };
 
     saveNote(newNote).then(function (data) {
+        console.log(data)
         getAndRenderNotes();
         renderActiveNote();
     });
@@ -128,6 +129,7 @@ var renderNoteList = function (notes) {
 // Gets notes from the db and renders them to the sidebar
 var getAndRenderNotes = function () {
     return getNotes().then(function (data) {
+        console.log(data)
         renderNoteList(data);
     });
 };

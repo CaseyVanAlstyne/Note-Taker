@@ -2,6 +2,8 @@
 // =============================================================
 const express = require("express");
 const path = require("path");
+const fs = require("fs");
+const db = require("./db/db.json");
 
 // Sets up the Express App
 // =============================================================
@@ -11,6 +13,9 @@ let PORT = process.env.PORT || 8080;
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+//static files (CSS)
+app.use(express.static('public'));
+
 
 // Set up Routes for pathing
 // =============================================================
@@ -22,16 +27,17 @@ app.get("/", function (req, res) {
 app.get("/notes", function (req, res) {
     res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
-//static files (CSS)
-app.use(express.static(__dirname + '/public'));
 
 //get all notes
 app.get("/api/notes", function (req, res) {
-    // return res.json(notes);
+    return res.json(db);
+    console.log(db)
 });
 
 //adds a new note
 app.post("/api/notes", function (req, res) {
+    console.log(req.body);
+    res.send("This was a success, dummy!");
 });
 
 //deletes a note by id
