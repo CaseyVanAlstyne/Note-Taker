@@ -30,8 +30,13 @@ app.get("/notes", function (req, res) {
 
 //get all notes
 app.get("/api/notes", function (req, res) {
-    // return res.json(db);
+    return res.json(db);
     console.log(db)
+    newClass.getNote()
+        .then((note) => res.json(note))
+        // should read file and convert to array of objects, which is then registered to browser
+        .catch((err) => res.status(500).json(err));
+    // catches an error on status 500
 });
 
 //adds a new note
