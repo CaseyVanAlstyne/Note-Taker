@@ -19,7 +19,19 @@ class newClass {
             })
     }
 
-    addNote
+    addNote(note) {
+        // deconstruct object with the note
+        const { title, text } = note;
+        return this.getNote()
+            .then(note => {
+                return note;
+            })
+            .then(writeNote => {
+                return this.write(writeNote)
+            })
+        // do I need another .then here? If so, what is the funciton parameter?
+        // .then(() => ????)
+    }
 
 
     removeNote
