@@ -11,11 +11,18 @@ class newClass {
     write(note) {
         return writeData("db/db.json", JSON.stringify(note));
     }
-    getNotes() {
+    getNote() {
         return this.read()
             .then(note => {
                 let pNote = JSON.parse(note);
                 return pNote;
             })
     }
+
+    addNote
+
+
+    removeNote
+
+
 }
