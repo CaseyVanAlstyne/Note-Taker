@@ -30,7 +30,7 @@ app.get("/notes", function (req, res) {
 
 //get all notes
 app.get("/api/notes", function (req, res) {
-    return res.json(db);
+    // return res.json(db);
     console.log(db)
 });
 
