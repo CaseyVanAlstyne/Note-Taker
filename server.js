@@ -60,7 +60,21 @@ app.post("/api/notes", function (req, res) {
 
 //deletes a note by id
 app.delete("/api/notes/:id", function (req, res) {
+    fs.readFile("db/db.json", "utf8", function (err, data) {
+        if (err) throw err;
+        const dataArr = JSON.parse(data);
+        const newDataArr = dataArr.filter(note => {
+            return note.id != req.params.id;
+        })
+        console.log(newDataArr);
+        fs.writeFile("db/db.json", JSON.stringify(newDataArr), function (err) {
+            if (err) throw err;
+
+            console.log("Deleted Note");
+        })
+    })
 });
+res.end();
 
 // Appl begins listening for call
 app.listen(PORT, function () {
