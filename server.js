@@ -3,7 +3,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
-const db = require("./db/db.json");
+// const db = require("./db/db.json");
 
 // Sets up the Express App
 // =============================================================
@@ -31,29 +31,37 @@ app.get("/notes", function (req, res) {
 
 //get all notes
 app.get("/api/notes", function (req, res) {
-    return res.json(db);
-    console.log(db)
-    // newClass.getNote()
-    //     .then((note) => res.json(note))
-    //     // should read file and convert to array of objects, which is then registered to browser
-    //     .catch((err) => res.status(500).json(err));
-    // // catches an error on status 500
-});
+    fs.readFile("db/db.json", "utf8", function (err, data) {
+        if (err) throw err;
+        res.json(JSON.parse(data));
+    });
 
-//adds a new note
-app.post("/api/notes", function (req, res) {
-    console.log(req.body);
-    res.send("This was a success, dummy!");
-    res.json(note);
-    // res.append(data)
-    // return err
-});
+    //adds a new note
+    app.post("/api/notes", function (req, res) {
+        const newNote = {
+            title: req.body.title,
+            text: req.body.text,
+        }
+        fs.readFile("db/db.json", "utf8", function (err, data) {
+            if (err) throw err;
 
-//deletes a note by id
-app.delete("/api/notes/:id", function (req, res) {
-});
+            const dataArr = JSON.parse(data);
+            dataArr.push(newNote);
 
-// Appl begins listening for call
-app.listen(PORT, function () {
-    console.log("App listening on PORT " + PORT);
-});
+            fs.writeFile("db/db.json", JSON.stringify(dataArr), function (err) {
+                if (err) throw err;
+
+                console.log("This is a New NOTE!")
+            })
+        })
+        res.JSON(newNote);
+    });
+
+    //deletes a note by id
+    app.delete("/api/notes/:id", function (req, res) {
+    });
+
+    // Appl begins listening for call
+    app.listen(PORT, function () {
+        console.log("App listening on PORT " + PORT);
+    });
