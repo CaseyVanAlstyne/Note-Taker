@@ -55,7 +55,7 @@ app.post("/api/notes", function (req, res) {
             console.log("This is a New NOTE!")
         })
     })
-    res.JSON(newNote);
+    res.json(newNote);
 });
 
 //deletes a note by id
