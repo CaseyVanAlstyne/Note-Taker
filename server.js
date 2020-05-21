@@ -34,34 +34,35 @@ app.get("/api/notes", function (req, res) {
     fs.readFile("db/db.json", "utf8", function (err, data) {
         if (err) throw err;
         res.json(JSON.parse(data));
-    });
+    })
+});
 
-    //adds a new note
-    app.post("/api/notes", function (req, res) {
-        const newNote = {
-            title: req.body.title,
-            text: req.body.text,
-        }
-        fs.readFile("db/db.json", "utf8", function (err, data) {
+//adds a new note
+app.post("/api/notes", function (req, res) {
+    const newNote = {
+        title: req.body.title,
+        text: req.body.text,
+    }
+    fs.readFile("db/db.json", "utf8", function (err, data) {
+        if (err) throw err;
+
+        const dataArr = JSON.parse(data);
+        dataArr.push(newNote);
+
+        fs.writeFile("db/db.json", JSON.stringify(dataArr), function (err) {
             if (err) throw err;
 
-            const dataArr = JSON.parse(data);
-            dataArr.push(newNote);
-
-            fs.writeFile("db/db.json", JSON.stringify(dataArr), function (err) {
-                if (err) throw err;
-
-                console.log("This is a New NOTE!")
-            })
+            console.log("This is a New NOTE!")
         })
-        res.JSON(newNote);
-    });
+    })
+    res.JSON(newNote);
+});
 
-    //deletes a note by id
-    app.delete("/api/notes/:id", function (req, res) {
-    });
+//deletes a note by id
+app.delete("/api/notes/:id", function (req, res) {
+});
 
-    // Appl begins listening for call
-    app.listen(PORT, function () {
-        console.log("App listening on PORT " + PORT);
-    });
+// Appl begins listening for call
+app.listen(PORT, function () {
+    console.log("App listening on PORT " + PORT);
+})
