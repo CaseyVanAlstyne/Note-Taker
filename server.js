@@ -3,7 +3,6 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
-// const db = require("./db/db.json");
 
 // Sets up the Express App
 // =============================================================
@@ -73,8 +72,9 @@ app.delete("/api/notes/:id", function (req, res) {
             console.log("Deleted Note");
         })
     })
+    res.end();
 });
-res.end();
+
 
 // Appl begins listening for call
 app.listen(PORT, function () {
