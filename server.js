@@ -4,6 +4,7 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
+// Thanks Tom, Brenden, and Michael Nance for helping with the uuid stuff!
 
 // Sets up the Express App
 // =============================================================
@@ -17,16 +18,15 @@ app.use(express.json());
 // app.use(express.static('public'));
 app.use(express.static(__dirname + '/public'));
 
-
 // Set up Routes for pathing
 // =============================================================
 // routes user to index html
 app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "/public/index.html"));
+    res.sendFile(path.join(__dirname, "public/index.html"));
 });
 // routes user to notes html
 app.get("/notes", function (req, res) {
-    res.sendFile(path.join(__dirname, "/public/notes.html"));
+    res.sendFile(path.join(__dirname, "public/notes.html"));
 });
 
 //get all notes
@@ -46,14 +46,12 @@ app.post("/api/notes", function (req, res) {
     }
     fs.readFile("db/db.json", "utf8", function (err, data) {
         if (err) throw err;
-
         const dataArr = JSON.parse(data);
         dataArr.push(newNote);
 
         fs.writeFile("db/db.json", JSON.stringify(dataArr), function (err) {
             if (err) throw err;
-
-            console.log("This is a New NOTE!")
+            // console.log("This is a New NOTE!")
         })
     })
     res.json(newNote);
@@ -71,7 +69,6 @@ app.delete("/api/notes/:id", function (req, res) {
         console.log(newDataArr);
         fs.writeFile("db/db.json", JSON.stringify(newDataArr), function (err) {
             if (err) throw err;
-
             console.log("Deleted Note");
         })
     })
