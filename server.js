@@ -3,6 +3,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const { v4: uuidv4 } = require("uuid");
 
 // Sets up the Express App
 // =============================================================
@@ -41,6 +42,7 @@ app.post("/api/notes", function (req, res) {
     const newNote = {
         title: req.body.title,
         text: req.body.text,
+        id: uuidv4()
     }
     fs.readFile("db/db.json", "utf8", function (err, data) {
         if (err) throw err;
@@ -55,6 +57,7 @@ app.post("/api/notes", function (req, res) {
         })
     })
     res.json(newNote);
+    console.log("This is newNote", newNote);
 });
 
 //deletes a note by id
@@ -74,7 +77,6 @@ app.delete("/api/notes/:id", function (req, res) {
     })
     res.end();
 });
-
 
 // Appl begins listening for call
 app.listen(PORT, function () {
